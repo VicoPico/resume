@@ -16,18 +16,38 @@ body {
 	padding: 32px;
 }
 
+/* ---------------- Header ---------------- */
+
 .cv-header {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 260px 1fr;
+	grid-template-areas:
+		'left center'
+		'about about';
 	gap: 24px;
 	padding-bottom: 24px;
 	border-bottom: 1px solid #e6e6e6;
+	align-items: start;
 }
 
-.profile {
-	display: flex;
-	align-items: center;
-	gap: 16px;
+.header-left {
+	grid-area: left;
+	display: grid;
+	gap: 12px;
+}
+
+.header-center {
+	grid-area: center;
+	padding: 12px;
+	border: 1px solid #eeeeee;
+	border-radius: 8px;
+}
+
+.about {
+	grid-area: about;
+	padding: 12px;
+	border: 1px solid #eeeeee;
+	border-radius: 8px;
 }
 
 .avatar {
@@ -38,40 +58,79 @@ body {
 	background: #f6f6f6;
 }
 
+.location {
+	padding: 12px;
+	border: 1px solid #eeeeee;
+	border-radius: 8px;
+	display: grid;
+	gap: 8px;
+}
+
+.location-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+h1 {
+	margin: 0 0 8px;
+	font-size: 24px;
+}
+
 .title {
-	margin: 4px 0 0;
+	margin: 0 0 12px;
 	color: #666666;
 }
 
-.meta {
+.quick-contact {
+	list-style: none;
+	margin: 0;
+	padding: 0;
 	display: grid;
-	gap: 16px;
+	gap: 8px;
 }
 
-.meta-block h2 {
-	margin-bottom: 4px;
+.quick-contact li {
+	display: flex;
+	align-items: center;
+	gap: 8px;
 }
+
+.icon {
+	width: 20px;
+	text-align: center;
+}
+
+.about h2 {
+	margin: 0 0 8px;
+	font-size: 18px;
+}
+
+/* ---------------- Body ---------------- */
 
 .cv-body {
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) auto minmax(0, 2fr);
 	gap: 24px;
 	padding-top: 24px;
+	align-items: stretch;
 }
 
 .divider {
 	width: 1px;
 	background: #d0d0d0;
+	justify-self: center;
+	align-self: stretch;
 }
 
-h1,
+.skills,
+.timeline {
+	min-width: 0;
+}
+
 h2,
 h3 {
 	margin: 0 0 8px;
-}
-
-h1 {
-	font-size: 24px;
 }
 
 h2 {
@@ -111,13 +170,19 @@ ul {
 	font-size: 14px;
 }
 
-@media (max-width: 768px) {
+/* ---------------- Responsive ---------------- */
+
+@media (max-width: 900px) {
 	.cv-container {
 		padding: 24px;
 	}
 
 	.cv-header {
 		grid-template-columns: 1fr;
+		grid-template-areas:
+			'left'
+			'center'
+			'about';
 	}
 
 	.cv-body {

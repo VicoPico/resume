@@ -9,28 +9,50 @@
 	<body>
 		<div class="cv-container">
 			<header class="cv-header">
-				<div class="profile">
+				<!-- Left: photo + address/city -->
+				<div class="header-left">
 					<div class="avatar" aria-hidden="true"></div>
-					<div>
-						<h1>Full Name</h1>
-						<p class="title">Role / Title</p>
+
+					<div class="location">
+						<div class="location-row">
+							<span class="icon" aria-hidden="true">📍</span>
+							<span>Address</span>
+						</div>
+						<div class="location-row">
+							<span class="icon" aria-hidden="true">🏙</span>
+							<span>City &amp; Region</span>
+						</div>
 					</div>
 				</div>
-				<div class="meta">
-					<div class="meta-block">
-						<h2>Address</h2>
-						<p>City, Country</p>
-					</div>
-					<div class="meta-block">
-						<h2>About</h2>
-						<p>Short summary about the candidate goes here.</p>
-					</div>
+
+				<!-- Center: name/title + email/phone -->
+				<div class="header-center">
+					<h1>Victor Gomez</h1>
+					<p class="title">Fullstack Developer</p>
+
+					<ul class="quick-contact">
+						<li>
+							<span class="icon" aria-hidden="true">✉</span>
+							<span>Email</span>
+						</li>
+						<li>
+							<span class="icon" aria-hidden="true">☎</span>
+							<span>Telephone</span>
+						</li>
+					</ul>
+				</div>
+
+				<!-- About (full width, below) -->
+				<div class="about">
+					<h2>About</h2>
+					<p>Short professional summary placeholder…</p>
 				</div>
 			</header>
 
 			<main class="cv-body">
 				<section class="skills" aria-labelledby="skills-title">
 					<h2 id="skills-title">Skills</h2>
+
 					<div class="skill-group">
 						<h3>Frontend</h3>
 						<ul>
@@ -40,6 +62,7 @@
 							<li>Accessibility</li>
 						</ul>
 					</div>
+
 					<div class="skill-group">
 						<h3>Backend</h3>
 						<ul>
@@ -49,6 +72,7 @@
 							<li>Authentication</li>
 						</ul>
 					</div>
+
 					<div class="skill-group">
 						<h3>Tools</h3>
 						<ul>
@@ -64,6 +88,7 @@
 
 				<section class="timeline" aria-labelledby="timeline-title">
 					<h2 id="timeline-title">Experience</h2>
+
 					<article class="timeline-item">
 						<h3>Role Title – Company</h3>
 						<p class="timeline-meta">Jan 2022 – Present</p>
@@ -73,6 +98,7 @@
 							<li>Cross-functional collaboration</li>
 						</ul>
 					</article>
+
 					<article class="timeline-item">
 						<h3>Role Title – Company</h3>
 						<p class="timeline-meta">Jun 2020 – Dec 2021</p>
@@ -82,6 +108,7 @@
 							<li>Improved developer workflows</li>
 						</ul>
 					</article>
+
 					<article class="timeline-item">
 						<h3>Role Title – Company</h3>
 						<p class="timeline-meta">Aug 2018 – May 2020</p>
