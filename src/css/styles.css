@@ -1,12 +1,30 @@
+:root {
+	--font-sans:
+		'Quicksand', 'Raleway', system-ui, -apple-system, BlinkMacSystemFont,
+		'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+	--font-mono:
+		'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+		'Liberation Mono', 'Courier New', monospace;
+
+	--divider-width: 1.5px;
+	--divider-color: var(--icon);
+	--contact-row-gap: 6px; /* spacing between email + phone rows */
+	--location-offset: 40px;
+	--card-border: #eeeeee;
+	--muted: #2a2a2e;
+	--icon: #2a2a2e;
+}
+
 * {
 	box-sizing: border-box;
 }
 
 body {
 	margin: 0;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: var(--font-sans);
 	line-height: 1.5;
-	color: #1a1a1a;
+	color: #2a2a2e;
 	background: #ffffff;
 }
 
@@ -16,54 +34,163 @@ body {
 	padding: 32px;
 }
 
+/* Hide the inline sprite but keep it in the DOM */
+.svg-sprite {
+	position: absolute;
+	width: 0;
+	height: 0;
+	overflow: hidden;
+}
+
+/* Headings: slightly tighter for Quicksand */
+h1,
+h2,
+h3 {
+	letter-spacing: -0.015em;
+	margin: 0 0 8px;
+}
+
+h1 {
+	font-family: 'Raleway';
+	font-size: 70px;
+	letter-spacing: -0.02em;
+}
+
+h2 {
+	font-size: 24px;
+	letter-spacing: 0.085em;
+}
+
+h3 {
+	font-size: 20px;
+	letter-spacing: 0.085em;
+}
+
+h4 {
+	font-size: 18px;
+	letter-spacing: 0.05em;
+}
+
+/* ---------------- Shared 3-column split ---------------- */
+/* Both header and body use: left | divider | right */
+.cv-header,
+.cv-body {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto minmax(0, 2fr);
+	column-gap: 24px;
+	align-items: stretch;
+}
+
+/* Shared divider used in header + body */
+.page-divider {
+	width: var(--divider-width);
+	background: var(--divider-color);
+	justify-self: center;
+	align-self: stretch;
+}
+
+/* Header divider: split line with icons embedded */
+.header-divider {
+	display: contents;
+}
+
+.header-divider .divider-seg {
+	grid-column: 2;
+	width: var(--divider-width);
+	background: var(--divider-color);
+	border-radius: 2px;
+	justify-self: center;
+	align-self: stretch;
+}
+
+.header-divider .divider-seg.top {
+	grid-row: 1;
+}
+
+.header-divider .divider-seg.bottom {
+	grid-row: 4;
+}
+
+.header-divider .divider-icons {
+	display: contents;
+}
+
+.header-divider .divider-icon-img {
+	grid-column: 2;
+	justify-self: center;
+	align-self: center;
+	width: 18px;
+	height: 18px;
+	display: block;
+}
+
+.header-divider .divider-icon-img:nth-child(1) {
+	grid-row: 2;
+}
+
+.header-divider .divider-icon-img:nth-child(2) {
+	grid-row: 3;
+}
+
 /* ---------------- Header ---------------- */
 
 .cv-header {
-	display: grid;
-	grid-template-columns: 260px 1fr;
-	grid-template-areas:
-		'left center'
-		'about about';
-	gap: 24px;
+	grid-template-rows: auto auto auto auto;
+	row-gap: var(--contact-row-gap);
 	padding-bottom: 24px;
-	border-bottom: 1px solid #e6e6e6;
-	align-items: start;
+	border-bottom: none;
 }
 
 .header-left {
-	grid-area: left;
+	grid-column: 1;
+	grid-row: 1 / 5;
 	display: grid;
 	gap: 12px;
+	align-content: start;
 }
 
-.header-center {
-	grid-area: center;
-	padding: 12px;
-	border: 1px solid #eeeeee;
-	border-radius: 8px;
+/* Right side stacks Title and About vertically */
+
+.header-right {
+	display: contents;
+}
+
+.header-title {
+	grid-column: 3;
+	grid-row: 1;
+}
+
+.header-title h1 {
+	margin-bottom: 2px;
+}
+
+.header-title h3 {
+	margin-top: -18px;
+	margin-bottom: 0;
 }
 
 .about {
-	grid-area: about;
-	padding: 12px;
-	border: 1px solid #eeeeee;
-	border-radius: 8px;
+	grid-column: 3;
+	grid-row: 4;
+	border: none;
+	padding: 0;
+	margin-top: 12px;
 }
 
 .avatar {
-	width: 72px;
-	height: 72px;
-	border: 1px solid #d0d0d0;
-	border-radius: 8px;
+	width: 173px;
+	height: 173px;
+	border: 1px solid var(--divider-color);
+	border-radius: 50%;
 	background: #f6f6f6;
+	justify-self: end;
 }
 
 .location {
-	padding: 12px;
-	border: 1px solid #eeeeee;
-	border-radius: 8px;
 	display: grid;
 	gap: 8px;
+	margin-top: var(--location-offset);
+	justify-self: end;
 }
 
 .location-row {
@@ -72,73 +199,69 @@ body {
 	gap: 8px;
 }
 
-h1 {
-	margin: 0 0 8px;
-	font-size: 24px;
+.location-row.location-city {
+	justify-content: flex-end;
+	text-align: right;
 }
 
 .title {
 	margin: 0 0 12px;
-	color: #666666;
+	color: var(--muted);
 }
 
 .quick-contact {
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	display: grid;
-	gap: 8px;
+	display: contents;
 }
 
 .quick-contact li {
-	display: flex;
-	align-items: center;
-	gap: 8px;
+	grid-column: 3;
+	line-height: 1.2;
 }
 
+.quick-contact li:nth-child(1) {
+	grid-row: 2;
+}
+
+.quick-contact li:nth-child(2) {
+	grid-row: 3;
+}
+
+/* Icons */
 .icon {
 	width: 20px;
-	text-align: center;
+	height: 20px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
 }
 
-.about h2 {
-	margin: 0 0 8px;
-	font-size: 18px;
+.icon-svg {
+	width: 18px;
+	height: 18px;
+	display: block;
+	fill: currentColor;
+	color: var(--icon);
+}
+
+.icon-img {
+	width: 18px;
+	height: 18px;
+	display: block;
 }
 
 /* ---------------- Body ---------------- */
 
 .cv-body {
-	display: grid;
-	grid-template-columns: minmax(0, 1fr) auto minmax(0, 2fr);
-	gap: 24px;
 	padding-top: 24px;
-	align-items: stretch;
-}
-
-.divider {
-	width: 1px;
-	background: #d0d0d0;
-	justify-self: center;
-	align-self: stretch;
 }
 
 .skills,
 .timeline {
 	min-width: 0;
-}
-
-h2,
-h3 {
-	margin: 0 0 8px;
-}
-
-h2 {
-	font-size: 18px;
-}
-
-h3 {
-	font-size: 16px;
 }
 
 ul {
@@ -166,8 +289,10 @@ ul {
 
 .timeline-meta {
 	margin: 4px 0 8px;
-	color: #666666;
-	font-size: 14px;
+	color: var(--muted);
+	font-size: 13px;
+	/* font-family: var(--font-mono); */
+	letter-spacing: 0.02em;
 }
 
 /* ---------------- Responsive ---------------- */
@@ -177,19 +302,31 @@ ul {
 		padding: 24px;
 	}
 
-	.cv-header {
-		grid-template-columns: 1fr;
-		grid-template-areas:
-			'left'
-			'center'
-			'about';
-	}
-
+	.cv-header,
 	.cv-body {
 		grid-template-columns: 1fr;
 	}
 
-	.divider {
+	.cv-header {
+		grid-template-rows: none;
+		row-gap: 16px;
+	}
+
+	.header-left,
+	.header-title,
+	.quick-contact li,
+	.about {
+		grid-column: 1;
+		grid-row: auto;
+	}
+
+	.quick-contact {
+		display: grid;
+		gap: var(--contact-row-gap);
+	}
+
+	.header-divider,
+	.page-divider {
 		display: none;
 	}
 }

@@ -4,54 +4,113 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>CV</title>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap"
+			rel="stylesheet" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+			rel="stylesheet" />
+
 		<link rel="stylesheet" href="src/css/styles.css" />
 	</head>
 	<body>
+		<!-- SVG sprite (inline, no requests, works on GitHub Pages) -->
+		<svg class="svg-sprite" aria-hidden="true" focusable="false">
+			<symbol id="icon-mail" viewBox="0 0 24 24">
+				<path
+					d="M4 6h16v12H4V6Zm1.5 1.5v.2l6.3 5a.9.9 0 0 0 1.1 0l6.3-5v-.2H5.5Zm13 2.2-4.8 3.8 4.8 3.7V9.7Zm-13 0v7.5l4.8-3.7L5.5 9.7Zm6.5 4.2L7 17.7h10L12 14Z" />
+			</symbol>
+
+			<symbol id="icon-phone" viewBox="0 0 24 24">
+				<path
+					d="M6.6 3.8c.6-.5 1.4-.5 2 0l2.2 2.2c.6.6.6 1.5 0 2.1l-1 1c-.2.2-.3.6-.2.9.7 1.7 2 3.1 3.6 3.8.3.1.7 0 .9-.2l1.1-1.1c.6-.6 1.5-.6 2.1 0l2.2 2.2c.6.6.6 1.5 0 2.1l-1.2 1.2c-.7.7-1.7 1-2.7.8-6.7-1.4-12-6.7-13.4-13.4-.2-1 .1-2 .8-2.7l1.2-1.2Z" />
+			</symbol>
+
+			<symbol id="icon-pin" viewBox="0 0 24 24">
+				<path
+					d="M12 2c3.3 0 6 2.7 6 6 0 4.3-6 12-6 12S6 12.3 6 8c0-3.3 2.7-6 6-6Zm0 8.5A2.5 2.5 0 1 0 12 5.5a2.5 2.5 0 0 0 0 5Z" />
+			</symbol>
+
+			<symbol id="icon-city" viewBox="0 0 24 24">
+				<path
+					d="M4 20V6.5c0-.3.1-.6.4-.7l6-3c.5-.3 1.1.1 1.1.7V7h2V4.5c0-.6.6-1 1.1-.7l5 2.5c.2.1.4.4.4.7V20h-3v-3h-2v3H9v-3H7v3H4Zm5-9H7v2h2v-2Zm0-3H7v2h2V8Zm4 3h-2v2h2v-2Zm4 0h-2v2h2v-2Zm0-3h-2v2h2V8Z" />
+			</symbol>
+		</svg>
+
 		<div class="cv-container">
 			<header class="cv-header">
-				<!-- Left: photo + address/city -->
+				<!-- Left column: picture + location -->
 				<div class="header-left">
 					<div class="avatar" aria-hidden="true"></div>
 
 					<div class="location">
 						<div class="location-row">
-							<span class="icon" aria-hidden="true">📍</span>
-							<span>Address</span>
+							<span class="icon" aria-hidden="true">
+								<img
+									class="icon-img"
+									src="src/assets/icons/marker.svg"
+									alt="" />
+							</span>
+							<span>Köpenhamnsvägen 10B</span>
 						</div>
-						<div class="location-row">
-							<span class="icon" aria-hidden="true">🏙</span>
-							<span>City &amp; Region</span>
+						<div class="location-row location-city">
+							<span>Malmö, Sweden</span>
 						</div>
 					</div>
 				</div>
 
-				<!-- Center: name/title + email/phone -->
-				<div class="header-center">
-					<h1>Victor Gomez</h1>
-					<p class="title">Fullstack Developer</p>
+				<!-- Header divider with icons "embedded" (split line) -->
+				<div class="header-divider" aria-hidden="true">
+					<div class="divider-seg top"></div>
 
-					<ul class="quick-contact">
-						<li>
-							<span class="icon" aria-hidden="true">✉</span>
-							<span>Email</span>
-						</li>
-						<li>
-							<span class="icon" aria-hidden="true">☎</span>
-							<span>Telephone</span>
-						</li>
-					</ul>
+					<div class="divider-icons">
+						<img
+							class="divider-icon-img"
+							src="src/assets/icons/circle-envelope.svg"
+							alt="" />
+						<img
+							class="divider-icon-img"
+							src="src/assets/icons/circle-phone.svg"
+							alt="" />
+					</div>
+
+					<div class="divider-seg bottom"></div>
 				</div>
 
-				<!-- About (full width, below) -->
-				<div class="about">
-					<h2>About</h2>
-					<p>Short professional summary placeholder…</p>
+				<!-- Right column: title/contact + about below -->
+				<div class="header-right">
+					<div class="header-title">
+						<h1>Victor Gomez</h1>
+						<h3>FULLSTACK DEVELOPER</h3>
+					</div>
+
+					<ul class="quick-contact">
+						<li>victor.gomcha@gmail.com</li>
+						<li>+46 73-713 2524</li>
+					</ul>
+
+					<div class="about">
+						<h3>ABOUT</h3>
+						<p>
+							A Fullstack developer with a strong backend focus who enjoys
+							building reliable, maintainable systems and improving existing
+							codebases. Experienced across both modern and mature ecosystems,
+							with a structured, pragmatic mindset and a strong sense of
+							long-term quality.
+						</p>
+					</div>
 				</div>
 			</header>
 
 			<main class="cv-body">
 				<section class="skills" aria-labelledby="skills-title">
-					<h2 id="skills-title">Skills</h2>
+					<h3 id="skills-title">SKILLS</h3>
 
 					<div class="skill-group">
 						<h3>Frontend</h3>
@@ -84,13 +143,13 @@
 					</div>
 				</section>
 
-				<div class="divider" aria-hidden="true"></div>
+				<div class="page-divider" aria-hidden="true"></div>
 
 				<section class="timeline" aria-labelledby="timeline-title">
-					<h2 id="timeline-title">Experience</h2>
+					<h3 id="timeline-title">EXPERIENCE</h3>
 
 					<article class="timeline-item">
-						<h3>Role Title – Company</h3>
+						<h4>Role Title – Company</h4>
 						<p class="timeline-meta">Jan 2022 – Present</p>
 						<p>Led key projects and delivered measurable outcomes.</p>
 						<ul>
@@ -100,7 +159,7 @@
 					</article>
 
 					<article class="timeline-item">
-						<h3>Role Title – Company</h3>
+						<h4>Role Title – Company</h4>
 						<p class="timeline-meta">Jun 2020 – Dec 2021</p>
 						<p>Contributed to platform improvements and stability.</p>
 						<ul>
@@ -110,7 +169,7 @@
 					</article>
 
 					<article class="timeline-item">
-						<h3>Role Title – Company</h3>
+						<h4>Role Title – Company</h4>
 						<p class="timeline-meta">Aug 2018 – May 2020</p>
 						<p>Supported delivery of new features and maintenance.</p>
 						<ul>
