@@ -3,7 +3,7 @@
 		"label": "Problem Solving",
 		"bubbles": [
 			{ "x": 60, "y": 52, "r": 40, "label": "Creativity" },
-			{ "x": 79, "y": 60, "r": 36, "label": "Attention to Detail" },
+			{ "x": 79, "y": 60, "r": 34, "label": "Attention to Detail" },
 			{ "x": 75, "y": 38, "r": 32, "label": "Collaboration" }
 		],
 		"annotations": [

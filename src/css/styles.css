@@ -9,6 +9,7 @@
 
 	--divider-width: 1.5px;
 	--divider-color: var(--icon);
+	--grid-column-gap: 24px;
 	--contact-row-gap: 6px; /* spacing between email + phone rows */
 	--location-offset: 40px;
 	--column-edge-offset: 16px;
@@ -27,6 +28,8 @@
 	--space-skill-group: 64px;
 	--soft-chart-height: 180px;
 	--soft-chart-offset-x: 10px;
+	--timeline-marker-size: 8px;
+	--timeline-marker-offset: 18px;
 	--card-border: #eeeeee;
 	--muted: #2a2a2e;
 	--icon: #2a2a2e;
@@ -142,7 +145,7 @@ h4 + ul {
 .cv-body {
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) auto minmax(0, 2fr);
-	column-gap: 24px;
+	column-gap: var(--grid-column-gap);
 	align-items: stretch;
 }
 
@@ -170,12 +173,10 @@ h4 + ul {
 
 .header-divider .divider-seg.top {
 	grid-row: 1;
-	margin-bottom: calc(var(--contact-row-gap) * -0.5);
 }
 
 .header-divider .divider-seg.bottom {
 	grid-row: 4;
-	margin-top: calc(var(--contact-row-gap) * -0.5);
 }
 
 .header-divider .divider-icons {
@@ -189,6 +190,7 @@ h4 + ul {
 	width: 18px;
 	height: 18px;
 	display: block;
+	margin: 10px 0;
 }
 
 .header-divider .divider-icon-img:nth-child(1) {
@@ -334,6 +336,28 @@ h4 + ul {
 .skills,
 .timeline {
 	min-width: 0;
+}
+
+.timeline {
+	position: relative;
+}
+
+.timeline-item h4 {
+	position: relative;
+}
+
+.timeline-item h4::before {
+	content: '';
+	position: absolute;
+	left: calc(-1 * (var(--grid-column-gap) + (var(--divider-width) / 2)));
+	top: 50%;
+	width: var(--timeline-marker-size);
+	height: var(--timeline-marker-size);
+	border: 1px solid var(--divider-color);
+	border-radius: 50%;
+	background: #ffffff;
+	transform: translate(-50%, -50%);
+	z-index: 2;
 }
 
 .skills {
