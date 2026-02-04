@@ -1,3 +1,49 @@
+let bubbleCharts = [];
+let hardCharts = [];
+
+const getChartTheme = () => {
+	const styles = getComputedStyle(document.documentElement);
+	return {
+		bubbleFill: styles.getPropertyValue('--chart-bubble-fill').trim(),
+		bubbleStroke: styles.getPropertyValue('--chart-bubble-stroke').trim(),
+		barFill: styles.getPropertyValue('--chart-bar-fill').trim(),
+		barStroke: styles.getPropertyValue('--chart-bar-stroke').trim(),
+		grid: styles.getPropertyValue('--chart-grid').trim(),
+		tick: styles.getPropertyValue('--chart-tick').trim(),
+	};
+};
+
+const updateChartsTheme = () => {
+	const theme = getChartTheme();
+
+	bubbleCharts.forEach((chart) => {
+		if (!chart) return;
+		const dataset = chart.data.datasets[0];
+		dataset.backgroundColor = theme.bubbleFill;
+		dataset.borderColor = theme.bubbleStroke;
+		chart.update('none');
+	});
+
+	hardCharts.forEach((chart) => {
+		if (!chart) return;
+		const dataset = chart.data.datasets[0];
+		dataset.backgroundColor = theme.barFill;
+		dataset.borderColor = theme.barStroke;
+		if (chart.options?.scales?.x?.ticks) {
+			chart.options.scales.x.ticks.color = theme.tick;
+		}
+		if (chart.options?.scales?.y?.ticks) {
+			chart.options.scales.y.ticks.color = theme.tick;
+		}
+		if (chart.options?.scales?.x?.grid) {
+			chart.options.scales.x.grid.color = theme.grid;
+		}
+		chart.update('none');
+	});
+};
+
+window.updateChartsTheme = updateChartsTheme;
+
 const initSoftSkillBubbles = async () => {
 	const chartOneCanvas = document.getElementById('softSkillsBubble1');
 	const chartTwoCanvas = document.getElementById('softSkillsBubble2');
@@ -41,11 +87,12 @@ const initSoftSkillBubbles = async () => {
 			},
 		};
 
+		const theme = getChartTheme();
 		const buildDataset = (definition) => ({
 			label: definition.label,
 			data: definition.bubbles.map(({ x, y, r }) => ({ x, y, r })),
-			backgroundColor: 'rgba(42, 42, 46, 0.15)',
-			borderColor: 'rgba(42, 42, 46, 0.4)',
+			backgroundColor: theme.bubbleFill,
+			borderColor: theme.bubbleStroke,
 			borderWidth: 1,
 		});
 
@@ -64,6 +111,8 @@ const initSoftSkillBubbles = async () => {
 			},
 			options: sharedOptions,
 		});
+
+		bubbleCharts = [chartOne, chartTwo];
 
 		initHardSkillCharts();
 
@@ -140,6 +189,7 @@ const initHardSkillCharts = async () => {
 	const fontFamily =
 		getComputedStyle(document.body).getPropertyValue('font-family').trim() ||
 		'Quicksand, sans-serif';
+	const theme = getChartTheme();
 
 	const sharedOptions = {
 		responsive: true,
@@ -164,19 +214,19 @@ const initHardSkillCharts = async () => {
 				max: 10,
 				ticks: {
 					stepSize: 5,
-					color: 'rgba(42, 42, 46, 0.7)',
+					color: theme.tick,
 					font: {
 						family: fontFamily,
 						size: 12,
 					},
 				},
 				grid: {
-					color: 'rgba(42, 42, 46, 0.12)',
+					color: theme.grid,
 				},
 			},
 			y: {
 				ticks: {
-					color: 'rgba(42, 42, 46, 0.85)',
+					color: theme.tick,
 					padding: 6,
 					font: {
 						family: fontFamily,
@@ -192,14 +242,14 @@ const initHardSkillCharts = async () => {
 
 	const buildBarDataset = (data) => ({
 		data,
-		backgroundColor: 'rgba(42, 42, 46, 0.25)',
-		borderColor: 'rgba(42, 42, 46, 0.45)',
+		backgroundColor: theme.barFill,
+		borderColor: theme.barStroke,
 		borderWidth: 1,
 		borderRadius: 2,
 		barThickness: 12,
 	});
 
-	new Chart(proficiencyCanvas, {
+	const proficiencyChart = new Chart(proficiencyCanvas, {
 		type: 'bar',
 		data: {
 			labels,
@@ -208,7 +258,7 @@ const initHardSkillCharts = async () => {
 		options: sharedOptions,
 	});
 
-	new Chart(experienceCanvas, {
+	const experienceChart = new Chart(experienceCanvas, {
 		type: 'bar',
 		data: {
 			labels,
@@ -216,6 +266,8 @@ const initHardSkillCharts = async () => {
 		},
 		options: sharedOptions,
 	});
+
+	hardCharts = [proficiencyChart, experienceChart];
 };
 
 const renderBubbleAnnotations = ({
