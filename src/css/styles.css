@@ -11,6 +11,16 @@
 	--divider-color: var(--icon);
 	--contact-row-gap: 6px; /* spacing between email + phone rows */
 	--location-offset: 40px;
+	--space-h1-h2: 18px;
+	--space-h1-h3: 12px;
+	--space-h1-h4: 10px;
+	--space-h1-p: 16px;
+	--space-h2-p: 10px;
+	--space-h3-p: 8px;
+	--space-h4-p: 8px;
+	--space-h4-chart: 12px;
+	--space-h3-chart: 14px;
+	--space-heading-list: 8px;
 	--card-border: #eeeeee;
 	--muted: #2a2a2e;
 	--icon: #2a2a2e;
@@ -47,12 +57,19 @@ h1,
 h2,
 h3 {
 	letter-spacing: -0.015em;
-	margin: 0 0 8px;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+	margin: 0;
 }
 
 h1 {
 	font-family: 'Raleway';
-	font-size: 70px;
+	font-size: 80px;
 	letter-spacing: -0.02em;
 }
 
@@ -69,6 +86,48 @@ h3 {
 h4 {
 	font-size: 18px;
 	letter-spacing: 0.05em;
+}
+
+h1 + h2 {
+	margin-top: var(--space-h1-h2);
+}
+
+h1 + h3 {
+	margin-top: var(--space-h1-h3);
+}
+
+h1 + h4 {
+	margin-top: var(--space-h1-h4);
+}
+
+h1 + p {
+	margin-top: var(--space-h1-p);
+}
+
+h2 + p {
+	margin-top: var(--space-h2-p);
+}
+
+h3 + p {
+	margin-top: var(--space-h3-p);
+}
+
+h4 + p {
+	margin-top: var(--space-h4-p);
+}
+
+h4 + .chart-container {
+	margin-top: var(--space-h4-chart);
+}
+
+h3 + .chart-container {
+	margin-top: var(--space-h3-chart);
+}
+
+h2 + ul,
+h3 + ul,
+h4 + ul {
+	margin-top: var(--space-heading-list);
 }
 
 /* ---------------- Shared 3-column split ---------------- */
@@ -139,6 +198,7 @@ h4 {
 	row-gap: var(--contact-row-gap);
 	padding-bottom: 24px;
 	border-bottom: none;
+	align-items: start;
 }
 
 .header-left {
@@ -147,6 +207,7 @@ h4 {
 	display: grid;
 	gap: 12px;
 	align-content: start;
+	align-self: start;
 }
 
 /* Right side stacks Title and About vertically */
@@ -158,15 +219,15 @@ h4 {
 .header-title {
 	grid-column: 3;
 	grid-row: 1;
+	align-self: start;
 }
 
 .header-title h1 {
-	margin-bottom: 2px;
+	margin: 0;
 }
 
 .header-title h3 {
-	margin-top: -18px;
-	margin-bottom: 0;
+	margin: 0;
 }
 
 .about {
@@ -184,6 +245,17 @@ h4 {
 	border-radius: 50%;
 	background: #f6f6f6;
 	justify-self: end;
+	align-self: start;
+	overflow: hidden;
+	display: grid;
+	place-items: center;
+}
+
+.avatar-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
 }
 
 .location {
@@ -262,6 +334,14 @@ h4 {
 .skills,
 .timeline {
 	min-width: 0;
+}
+
+.skills {
+	justify-self: end;
+}
+
+#skills-title {
+	text-align: right;
 }
 
 ul {
