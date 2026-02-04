@@ -8,10 +8,11 @@
 	--border-subtle: #e6e6e6;
 	--chart-bubble-fill: rgba(42, 42, 46, 0.15);
 	--chart-bubble-stroke: rgba(42, 42, 46, 0.4);
-	--chart-bar-fill: rgba(42, 42, 46, 0.25);
-	--chart-bar-stroke: rgba(42, 42, 46, 0.45);
+	--chart-bar-fill: rgba(42, 42, 46, 0.45);
+	--chart-bar-stroke: rgba(42, 42, 46, 0.7);
 	--chart-grid: rgba(42, 42, 46, 0.12);
 	--chart-tick: rgba(42, 42, 46, 0.85);
+	--icon-filter: none;
 	--font-sans:
 		'Quicksand', 'Raleway', system-ui, -apple-system, BlinkMacSystemFont,
 		'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -64,6 +65,7 @@ html[data-theme='dark'] {
 	--chart-bar-stroke: rgba(225, 225, 232, 0.5);
 	--chart-grid: rgba(225, 225, 232, 0.12);
 	--chart-tick: rgba(225, 225, 232, 0.85);
+	--icon-filter: brightness(0) invert(1);
 }
 
 html[data-theme='light'] {
@@ -76,8 +78,8 @@ html[data-theme='light'] {
 	--border-subtle: #e6e6e6;
 	--chart-bubble-fill: rgba(42, 42, 46, 0.15);
 	--chart-bubble-stroke: rgba(42, 42, 46, 0.4);
-	--chart-bar-fill: rgba(42, 42, 46, 0.25);
-	--chart-bar-stroke: rgba(42, 42, 46, 0.45);
+	--chart-bar-fill: rgba(42, 42, 46, 0.45);
+	--chart-bar-stroke: rgba(42, 42, 46, 0.7);
 	--chart-grid: rgba(42, 42, 46, 0.12);
 	--chart-tick: rgba(42, 42, 46, 0.85);
 }
@@ -239,6 +241,7 @@ h4 + ul {
 	width: 18px;
 	height: 18px;
 	display: block;
+	filter: var(--icon-filter);
 }
 
 .header-divider .divider-icons {
@@ -412,6 +415,7 @@ html[data-theme='dark'] #themeIcon {
 	width: 18px;
 	height: 18px;
 	display: block;
+	filter: var(--icon-filter);
 }
 
 /* ---------------- Body ---------------- */
