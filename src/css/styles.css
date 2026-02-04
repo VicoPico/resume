@@ -10,7 +10,8 @@
 	--divider-width: 1.5px;
 	--divider-color: var(--icon);
 	--grid-column-gap: 24px;
-	--contact-row-gap: 6px; /* spacing between email + phone rows */
+	--contact-row-gap: 12px; /* spacing between email + phone rows */
+	--contact-icon-gap: 18px;
 	--location-offset: 40px;
 	--column-edge-offset: 16px;
 	--space-h1-h2: 18px;
@@ -29,7 +30,7 @@
 	--soft-chart-height: 180px;
 	--hard-chart-height: 220px;
 	--hard-chart-rows: 17;
-	--hard-chart-row-height: 22px;
+	--hard-chart-row-height: 24px;
 	--soft-chart-offset-x: 10px;
 	--timeline-marker-size: 8px;
 	--timeline-marker-offset: 18px;
@@ -147,6 +148,7 @@ h4 + ul {
 .cv-header,
 .cv-body {
 	display: grid;
+	row-gap: var(--contact-row-gap);
 	grid-template-columns: minmax(0, 1fr) auto minmax(0, 2fr);
 	column-gap: var(--grid-column-gap);
 	align-items: stretch;
@@ -176,14 +178,12 @@ h4 + ul {
 
 .header-divider .divider-seg.top {
 	grid-row: 1;
+	margin-bottom: var(--contact-icon-gap);
 }
 
 .header-divider .divider-seg.bottom {
 	grid-row: 4;
-}
-
-.header-divider .divider-icons {
-	display: contents;
+	margin-top: var(--contact-icon-gap);
 }
 
 .header-divider .divider-icon-img {
@@ -193,7 +193,10 @@ h4 + ul {
 	width: 18px;
 	height: 18px;
 	display: block;
-	margin: 10px 0;
+}
+
+.header-divider .divider-icons {
+	display: contents;
 }
 
 .header-divider .divider-icon-img:nth-child(1) {
@@ -526,6 +529,18 @@ ul {
 
 	.cv-header {
 		grid-template-rows: none;
+
+		.header-title {
+			grid-row: 1;
+		}
+
+		.quick-contact li:nth-child(1) {
+			grid-row: 2;
+		}
+
+		.quick-contact li:nth-child(2) {
+			grid-row: 3;
+		}
 		row-gap: 16px;
 	}
 

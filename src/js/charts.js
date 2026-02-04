@@ -167,7 +167,7 @@ const initHardSkillCharts = async () => {
 					color: 'rgba(42, 42, 46, 0.7)',
 					font: {
 						family: fontFamily,
-						size: 11,
+						size: 12,
 					},
 				},
 				grid: {
@@ -180,7 +180,7 @@ const initHardSkillCharts = async () => {
 					padding: 6,
 					font: {
 						family: fontFamily,
-						size: 11,
+						size: 12,
 					},
 				},
 				grid: {
@@ -196,7 +196,7 @@ const initHardSkillCharts = async () => {
 		borderColor: 'rgba(42, 42, 46, 0.45)',
 		borderWidth: 1,
 		borderRadius: 2,
-		barThickness: 10,
+		barThickness: 12,
 	});
 
 	new Chart(proficiencyCanvas, {
