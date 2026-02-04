@@ -20,4 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			target.innerHTML = '<p>Unable to load content.</p>';
 		}
 	});
+
+	if (typeof window.initSoftSkillBubbles === 'function') {
+		window.initSoftSkillBubbles();
+	}
 });
