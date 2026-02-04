@@ -65,6 +65,8 @@ const initSoftSkillBubbles = async () => {
 			options: sharedOptions,
 		});
 
+		initHardSkillCharts();
+
 		renderBubbleAnnotations({
 			chart: chartOne,
 			wrapperEl: document.querySelector(
@@ -109,6 +111,112 @@ const initSoftSkillBubbles = async () => {
 };
 
 window.initSoftSkillBubbles = initSoftSkillBubbles;
+
+const initHardSkillCharts = async () => {
+	const proficiencyCanvas = document.getElementById('hardSkillsProficiency');
+	const experienceCanvas = document.getElementById('hardSkillsExperience');
+	if (!proficiencyCanvas || !experienceCanvas || typeof Chart === 'undefined') {
+		return;
+	}
+
+	let labels = [];
+	let proficiencyData = [];
+	let experienceData = [];
+
+	try {
+		const response = await fetch('src/data/hard-skills.json');
+		if (!response.ok) {
+			throw new Error('Failed to load hard skills data');
+		}
+		const hardSkills = await response.json();
+		labels = hardSkills.labels || [];
+		proficiencyData = hardSkills.proficiency || [];
+		experienceData = hardSkills.experienceYears || [];
+	} catch (error) {
+		console.error(error);
+		return;
+	}
+
+	const fontFamily =
+		getComputedStyle(document.body).getPropertyValue('font-family').trim() ||
+		'Quicksand, sans-serif';
+
+	const sharedOptions = {
+		responsive: true,
+		maintainAspectRatio: false,
+		indexAxis: 'y',
+		layout: {
+			padding: {
+				left: 8,
+				right: 12,
+				top: 4,
+				bottom: 4,
+			},
+		},
+		plugins: {
+			legend: {
+				display: false,
+			},
+		},
+		scales: {
+			x: {
+				min: 0,
+				max: 10,
+				ticks: {
+					stepSize: 5,
+					color: 'rgba(42, 42, 46, 0.7)',
+					font: {
+						family: fontFamily,
+						size: 11,
+					},
+				},
+				grid: {
+					color: 'rgba(42, 42, 46, 0.12)',
+				},
+			},
+			y: {
+				ticks: {
+					color: 'rgba(42, 42, 46, 0.85)',
+					padding: 6,
+					font: {
+						family: fontFamily,
+						size: 11,
+					},
+				},
+				grid: {
+					display: false,
+				},
+			},
+		},
+	};
+
+	const buildBarDataset = (data) => ({
+		data,
+		backgroundColor: 'rgba(42, 42, 46, 0.25)',
+		borderColor: 'rgba(42, 42, 46, 0.45)',
+		borderWidth: 1,
+		borderRadius: 2,
+		barThickness: 10,
+	});
+
+	new Chart(proficiencyCanvas, {
+		type: 'bar',
+		data: {
+			labels,
+			datasets: [buildBarDataset(proficiencyData)],
+		},
+		options: sharedOptions,
+	});
+
+	new Chart(experienceCanvas, {
+		type: 'bar',
+		data: {
+			labels,
+			datasets: [buildBarDataset(experienceData)],
+		},
+		options: sharedOptions,
+	});
+};
 
 const renderBubbleAnnotations = ({
 	chart,

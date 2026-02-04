@@ -27,6 +27,9 @@
 	--space-chart-stack: 56px;
 	--space-skill-group: 64px;
 	--soft-chart-height: 180px;
+	--hard-chart-height: 220px;
+	--hard-chart-rows: 17;
+	--hard-chart-row-height: 22px;
 	--soft-chart-offset-x: 10px;
 	--timeline-marker-size: 8px;
 	--timeline-marker-offset: 18px;
@@ -402,6 +405,34 @@ h4 + ul {
 
 .soft-skills h4 {
 	text-align: right;
+}
+
+.soft-skills + .technical-skills {
+	margin-top: var(--space-skill-group);
+}
+
+.technical-skills {
+	display: grid;
+	gap: var(--space-section-item);
+	text-align: right;
+}
+
+.hard-skill-chart {
+	display: grid;
+	gap: var(--space-heading-list);
+}
+
+.hard-skill-title {
+	margin: 0;
+	font-size: 14px;
+	letter-spacing: 0.05em;
+	color: var(--muted);
+	text-align: right;
+}
+
+.hard-chart-container {
+	width: 100%;
+	height: calc(var(--hard-chart-rows) * var(--hard-chart-row-height));
 }
 
 .chart-container {
