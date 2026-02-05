@@ -125,6 +125,14 @@ const initSoftSkillBubbles = async () => {
 			annotations: softSkillBubbles.problemSolving.annotations,
 		});
 
+		setupBubbleCenterTitle({
+			chart: chartOne,
+			wrapperEl: document.querySelector(
+				'.bubble-chart[data-chart="problemSolving"]',
+			),
+			definition: softSkillBubbles.problemSolving,
+		});
+
 		if (document.fonts && document.fonts.ready) {
 			document.fonts.ready.then(() => {
 				renderBubbleAnnotations({
@@ -143,6 +151,20 @@ const initSoftSkillBubbles = async () => {
 					bubbles: softSkillBubbles.communication.bubbles,
 					annotations: softSkillBubbles.communication.annotations,
 				});
+				setupBubbleCenterTitle({
+					chart: chartOne,
+					wrapperEl: document.querySelector(
+						'.bubble-chart[data-chart="problemSolving"]',
+					),
+					definition: softSkillBubbles.problemSolving,
+				});
+				setupBubbleCenterTitle({
+					chart: chartTwo,
+					wrapperEl: document.querySelector(
+						'.bubble-chart[data-chart="communication"]',
+					),
+					definition: softSkillBubbles.communication,
+				});
 			});
 		}
 
@@ -153,6 +175,14 @@ const initSoftSkillBubbles = async () => {
 			),
 			bubbles: softSkillBubbles.communication.bubbles,
 			annotations: softSkillBubbles.communication.annotations,
+		});
+
+		setupBubbleCenterTitle({
+			chart: chartTwo,
+			wrapperEl: document.querySelector(
+				'.bubble-chart[data-chart="communication"]',
+			),
+			definition: softSkillBubbles.communication,
 		});
 	} catch (error) {
 		console.error(error);
@@ -391,3 +421,55 @@ const renderBubbleAnnotations = ({
 		wrapperEl.__bubbleObserver = observer;
 	}
 };
+
+function setupBubbleCenterTitle({ chart, wrapperEl, definition }) {
+	if (!chart || !wrapperEl || !definition) {
+		return;
+	}
+
+	const titleEl = wrapperEl.querySelector('.bubble-center-title');
+	if (!titleEl) {
+		return;
+	}
+
+	const positionTitle = () => {
+		if (!chart.scales?.x || !chart.scales?.y) {
+			return;
+		}
+
+		const bubbles = definition.bubbles || [];
+		if (bubbles.length === 0) {
+			return;
+		}
+
+		let sumWeight = 0;
+		let sumX = 0;
+		let sumY = 0;
+
+		bubbles.forEach((bubble) => {
+			const weight = bubble.r || 1;
+			const bubbleX = chart.scales.x.getPixelForValue(bubble.x);
+			const bubbleY = chart.scales.y.getPixelForValue(bubble.y);
+			sumWeight += weight;
+			sumX += bubbleX * weight;
+			sumY += bubbleY * weight;
+		});
+
+		const cx = sumX / sumWeight;
+		const cy = sumY / sumWeight;
+
+		titleEl.textContent = definition.label || '';
+		titleEl.style.left = `${cx}px`;
+		titleEl.style.top = `${cy}px`;
+	};
+
+	requestAnimationFrame(positionTitle);
+
+	if (!wrapperEl.__centerTitleObserver) {
+		const observer = new ResizeObserver(() => {
+			requestAnimationFrame(positionTitle);
+		});
+		observer.observe(wrapperEl);
+		wrapperEl.__centerTitleObserver = observer;
+	}
+}
