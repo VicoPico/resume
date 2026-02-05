@@ -10,32 +10,45 @@ document.addEventListener('DOMContentLoaded', async () => {
 /* -------------------------------------------------- */
 
 const loadIncludes = async () => {
-	const targets = Array.from(document.querySelectorAll('[data-include]'));
-	if (targets.length === 0) return;
+	// Safety to avoid infinite loops if a partial accidentally re-inserts data-include forever
+	const MAX_PASSES = 10;
 
-	for (const target of targets) {
-		const source = target.getAttribute('data-include');
-		if (!source) continue;
+	for (let pass = 0; pass < MAX_PASSES; pass++) {
+		const targets = Array.from(document.querySelectorAll('[data-include]'));
+		if (targets.length === 0) return;
 
-		// ✅ Important: resolves paths correctly on GitHub Pages (/resume/)
-		const url = new URL(source, document.baseURI).toString();
-
-		try {
-			const response = await fetch(url, { cache: 'no-cache' });
-			if (!response.ok) {
-				throw new Error(`Failed to load ${url} (${response.status})`);
+		for (const target of targets) {
+			const source = target.getAttribute('data-include');
+			if (!source) {
+				target.removeAttribute('data-include');
+				continue;
 			}
 
-			const html = await response.text();
-			target.innerHTML = html;
+			// ✅ GitHub Pages-safe: resolves /resume/ base correctly
+			const url = new URL(source, document.baseURI).toString();
 
-			// ✅ Prevent infinite recursion / re-processing
-			target.removeAttribute('data-include');
-		} catch (error) {
-			console.error(error);
-			target.innerHTML = '<p>Unable to load content.</p>';
+			try {
+				const response = await fetch(url, { cache: 'no-cache' });
+				if (!response.ok) {
+					throw new Error(`Failed to load ${url} (${response.status})`);
+				}
+
+				const html = await response.text();
+				target.innerHTML = html;
+
+				// ✅ Important: remove attribute so we don’t re-fetch the same node forever
+				target.removeAttribute('data-include');
+			} catch (error) {
+				console.error(error);
+				target.innerHTML = '<p>Unable to load content.</p>';
+				target.removeAttribute('data-include');
+			}
 		}
 	}
+
+	console.warn(
+		`loadIncludes: reached MAX_PASSES=${MAX_PASSES}. Check for includes that re-insert [data-include] endlessly.`,
+	);
 };
 
 /* -------------------------------------------------- */
