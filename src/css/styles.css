@@ -22,6 +22,7 @@
 		'Liberation Mono', 'Courier New', monospace;
 
 	--divider-width: 1.5px;
+	--divider-column-width: 24px;
 	--grid-column-gap: 24px;
 	--contact-row-gap: 12px; /* spacing between email + phone rows */
 	--contact-icon-gap: 18px;
@@ -197,7 +198,10 @@ h4 + ul {
 .cv-body {
 	display: grid;
 	row-gap: var(--contact-row-gap);
-	grid-template-columns: minmax(0, 1fr) auto minmax(0, 2fr);
+	grid-template-columns: minmax(0, 1fr) var(--divider-column-width) minmax(
+			0,
+			2fr
+		);
 	column-gap: var(--grid-column-gap);
 	align-items: stretch;
 }
@@ -440,7 +444,7 @@ html[data-theme='dark'] #themeIcon {
 .timeline-item h4::before {
 	content: '';
 	position: absolute;
-	left: calc(-1 * (var(--grid-column-gap) + (var(--divider-width) / 2)));
+	left: calc(-1 * (var(--grid-column-gap) + (var(--divider-column-width) / 2)));
 	top: 50%;
 	width: var(--timeline-marker-size);
 	height: var(--timeline-marker-size);
