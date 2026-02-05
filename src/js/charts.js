@@ -27,8 +27,8 @@ const updateChartsTheme = () => {
 	hardCharts.forEach((chart) => {
 		if (!chart) return;
 		const dataset = chart.data.datasets[0];
-		dataset.backgroundColor = theme.barFill;
-		dataset.borderColor = theme.barStroke;
+		dataset.backgroundColor = theme.bubbleFill;
+		dataset.borderColor = theme.bubbleStroke;
 		if (chart.options?.scales?.x?.ticks) {
 			chart.options.scales.x.ticks.color = theme.tick;
 		}
@@ -272,8 +272,8 @@ const initHardSkillCharts = async () => {
 
 	const buildBarDataset = (data) => ({
 		data,
-		backgroundColor: theme.barFill,
-		borderColor: theme.barStroke,
+		backgroundColor: theme.bubbleFill,
+		borderColor: theme.bubbleStroke,
 		borderWidth: 1,
 		borderRadius: 2,
 		barThickness: 12,

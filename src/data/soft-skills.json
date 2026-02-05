@@ -2,21 +2,25 @@
 	"problemSolving": {
 		"label": "Problem Solving",
 		"bubbles": [
-			{ "x": 60, "y": 52, "r": 40, "label": "Creativity" },
-			{ "x": 79, "y": 60, "r": 34, "label": "Attention to Detail" },
-			{ "x": 75, "y": 38, "r": 32, "label": "Collaboration" }
+			{ "x": 55, "y": 64, "r": 43, "label": "Creativity" },
+			{ "x": 80, "y": 69, "r": 32, "label": "Attention to Detail" },
+			{ "x": 70, "y": 38, "r": 36, "label": "Collaboration" }
 		],
 		"annotations": [
-			{ "targetIndex": 0, "labelPos": { "x": 25, "y": 18 }, "anchor": "right" },
-			{ "targetIndex": 1, "labelPos": { "x": 65, "y": 5 }, "anchor": "bottom" },
+			{
+				"targetIndex": 0,
+				"labelPos": { "x": 20, "y": 20 },
+				"anchor": "right"
+			},
+			{ "targetIndex": 1, "labelPos": { "x": 85, "y": 5 }, "anchor": "bottom" },
 			{ "targetIndex": 2, "labelPos": { "x": 50, "y": 90 }, "anchor": "top" }
 		]
 	},
 	"communication": {
 		"label": "Communication",
 		"bubbles": [
-			{ "x": 60, "y": 57, "r": 38, "label": "Helping Others" },
-			{ "x": 75, "y": 48, "r": 34, "label": "Empathy" },
+			{ "x": 50, "y": 61, "r": 44, "label": "Helping Others" },
+			{ "x": 75, "y": 60, "r": 34, "label": "Empathy" },
 			{ "x": 63, "y": 35, "r": 30, "label": "Active Listening" }
 		],
 		"annotations": [

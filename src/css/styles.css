@@ -41,9 +41,9 @@
 	--space-section-item: 16px;
 	--space-chart-stack: 56px;
 	--space-skill-group: 64px;
-	--soft-chart-height: 180px;
+	--soft-chart-height: 220px;
 	--hard-chart-height: 220px;
-	--hard-chart-rows: 17;
+	--hard-chart-rows: 23;
 	--hard-chart-row-height: 24px;
 	--soft-chart-offset-x: 10px;
 	--timeline-marker-size: 8px;
@@ -550,12 +550,14 @@ html[data-theme='dark'] #themeIcon {
 	transform: translate(-50%, -50%);
 	font-family: var(--font-sans);
 	font-size: 12px;
+	font-weight: 600;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
-	color: var(--icon);
+	color: var(--text);
 	pointer-events: none;
 	z-index: 2;
 	text-align: center;
+	white-space: nowrap;
 }
 
 .bubble-overlay {
