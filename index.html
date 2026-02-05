@@ -45,11 +45,18 @@
 		</svg>
 
 		<div class="cv-container">
-			<div data-include="partials/header.html"></div>
+			<header class="cv-header" data-include="partials/header.html"></header>
 
 			<main class="cv-body">
-				<div data-include="partials/skills.html"></div>
-				<div data-include="partials/timeline.html"></div>
+				<section
+					class="skills"
+					aria-labelledby="skills-title"
+					data-include="partials/skills.html"></section>
+				<div class="page-divider" aria-hidden="true"></div>
+				<section
+					class="timeline"
+					aria-labelledby="timeline-title"
+					data-include="partials/timeline.html"></section>
 			</main>
 		</div>
 
