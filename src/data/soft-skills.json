@@ -13,7 +13,7 @@
 				"anchor": "right"
 			},
 			{ "targetIndex": 1, "labelPos": { "x": 85, "y": 5 }, "anchor": "bottom" },
-			{ "targetIndex": 2, "labelPos": { "x": 50, "y": 90 }, "anchor": "top" }
+			{ "targetIndex": 2, "labelPos": { "x": 36, "y": 90 }, "anchor": "top" }
 		]
 	},
 	"communication": {

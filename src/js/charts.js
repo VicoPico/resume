@@ -38,7 +38,7 @@ const updateChartsTheme = () => {
 		if (chart.options?.scales?.x?.grid) {
 			chart.options.scales.x.grid.color = theme.grid;
 		}
-		chart.update('none');
+		chart.update();
 	});
 };
 

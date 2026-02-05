@@ -21,12 +21,51 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 
-	if (typeof window.initSoftSkillBubbles === 'function') {
-		window.initSoftSkillBubbles();
-	}
-
+	initChartObserver();
 	initThemeToggle();
 });
+
+const initChartObserver = () => {
+	const targets = document.querySelectorAll(
+		'.chart-container, .hard-chart-container',
+	);
+	if (!targets.length) {
+		return;
+	}
+
+	let chartsInitialized = false;
+	const revealTarget = (target) => {
+		target.classList.add('is-visible');
+		if (
+			!chartsInitialized &&
+			typeof window.initSoftSkillBubbles === 'function'
+		) {
+			chartsInitialized = true;
+			window.initSoftSkillBubbles();
+		}
+	};
+
+	if (!('IntersectionObserver' in window)) {
+		targets.forEach((target) => revealTarget(target));
+		return;
+	}
+
+	const observer = new IntersectionObserver(
+		(entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					revealTarget(entry.target);
+					observer.unobserve(entry.target);
+				}
+			});
+		},
+		{
+			threshold: 0.2,
+		},
+	);
+
+	targets.forEach((target) => observer.observe(target));
+};
 
 const initThemeToggle = () => {
 	const toggleButton = document.getElementById('themeToggle');
@@ -66,7 +105,9 @@ const initThemeToggle = () => {
 const applyTheme = (theme) => {
 	document.documentElement.dataset.theme = theme;
 	if (typeof window.updateChartsTheme === 'function') {
-		window.updateChartsTheme();
+		requestAnimationFrame(() => {
+			window.updateChartsTheme();
+		});
 	}
 };
 
