@@ -1,11 +1,20 @@
 // CV site scaffold
-document.addEventListener('DOMContentLoaded', () => {
-	const includeTargets = document.querySelectorAll('[data-include]');
+document.addEventListener('DOMContentLoaded', async () => {
+	await loadIncludes();
+	initChartObserver();
+	initThemeToggle();
+});
 
-	includeTargets.forEach(async (target) => {
+const loadIncludes = async () => {
+	const targets = Array.from(document.querySelectorAll('[data-include]'));
+	if (targets.length === 0) {
+		return;
+	}
+
+	for (const target of targets) {
 		const source = target.getAttribute('data-include');
 		if (!source) {
-			return;
+			continue;
 		}
 
 		try {
@@ -19,11 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
 			console.error(error);
 			target.innerHTML = '<p>Unable to load content.</p>';
 		}
-	});
+	}
 
-	initChartObserver();
-	initThemeToggle();
-});
+	if (document.querySelector('[data-include]')) {
+		await loadIncludes();
+	}
+};
 
 const initChartObserver = () => {
 	const targets = document.querySelectorAll(
