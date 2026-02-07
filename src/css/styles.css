@@ -474,6 +474,12 @@ html[data-theme='dark'] #themeIcon {
 	text-align: right;
 }
 
+.professional-skills h4 + .skills-list,
+.languages h4 + .skills-list,
+.driver-license h4 + .skills-list {
+	margin-top: 0;
+}
+
 .professional-skills + .soft-skills {
 	margin-top: var(--space-skill-group);
 }
@@ -503,9 +509,24 @@ html[data-theme='dark'] #themeIcon {
 	margin-top: var(--space-skill-group);
 }
 
+.technical-skills + .languages {
+	margin-top: var(--space-skill-group);
+}
+
+.languages + .driver-license {
+	margin-top: var(--space-skill-group);
+}
+
 .technical-skills {
 	display: grid;
 	gap: var(--space-section-item);
+	text-align: right;
+}
+
+.languages,
+.driver-license {
+	display: grid;
+	gap: var(--space-heading-list);
 	text-align: right;
 }
 
