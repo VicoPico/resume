@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
 	await loadIncludes();
 
-	// Ensure injected DOM is painted before we attach reveal logic
+	// Wait one frame so injected partials are painted before attaching observers
 	await new Promise((r) => requestAnimationFrame(r));
 
 	initRevealOnScroll('.skills-list li', { stagger: 180, threshold: 0.2 });
@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 /* -------------------------------------------------- */
 
 const loadIncludes = async () => {
-	// Safety to avoid infinite loops if a partial accidentally re-inserts data-include forever
 	const MAX_PASSES = 10;
 
 	for (let pass = 0; pass < MAX_PASSES; pass++) {
@@ -29,7 +28,6 @@ const loadIncludes = async () => {
 				continue;
 			}
 
-			// ✅ GitHub Pages-safe: resolves /resume/ base correctly
 			const url = new URL(source, document.baseURI).toString();
 
 			try {
@@ -40,8 +38,6 @@ const loadIncludes = async () => {
 
 				const html = await response.text();
 				target.innerHTML = html;
-
-				// ✅ Important: remove attribute so we don’t re-fetch the same node forever
 				target.removeAttribute('data-include');
 			} catch (error) {
 				console.error(error);
@@ -52,7 +48,7 @@ const loadIncludes = async () => {
 	}
 
 	console.warn(
-		`loadIncludes: reached MAX_PASSES=${MAX_PASSES}. Check for includes that re-insert [data-include] endlessly.`,
+		`loadIncludes: reached MAX_PASSES=${MAX_PASSES}. Check for recursive includes.`,
 	);
 };
 
@@ -80,7 +76,6 @@ const initChartObserver = () => {
 		}
 	};
 
-	// Fallback if IntersectionObserver unsupported
 	if (!('IntersectionObserver' in window)) {
 		targets.forEach((target) => revealTarget(target));
 		return;
@@ -117,13 +112,24 @@ const initRevealOnScroll = (
 	const targets = Array.from(document.querySelectorAll(selector));
 	if (targets.length === 0) return;
 
-	// Apply stagger delay (works whether or not IntersectionObserver is used)
-	targets.forEach((el, index) => {
-		if (stagger > 0)
-			el.style.setProperty('--reveal-delay', `${index * stagger}ms`);
+	/* --------------------------------------------------
+	   FIX: stagger restarts PER SKILLS LIST
+	   Previously index was global → later sections delayed
+	-------------------------------------------------- */
+
+	targets.forEach((el) => {
+		if (stagger <= 0) return;
+
+		const parentList = el.closest('.skills-list');
+		if (!parentList) return;
+
+		const localIndex = Array.from(parentList.querySelectorAll('li')).indexOf(
+			el,
+		);
+		el.style.setProperty('--reveal-delay', `${localIndex * stagger}ms`);
 	});
 
-	// If IntersectionObserver isn't supported, reveal immediately (still staggered)
+	// Fallback if IntersectionObserver unsupported
 	if (!('IntersectionObserver' in window)) {
 		requestAnimationFrame(() => {
 			targets.forEach((el) => el.classList.add('is-visible'));
@@ -136,7 +142,6 @@ const initRevealOnScroll = (
 			entries.forEach((entry) => {
 				if (!entry.isIntersecting) return;
 
-				// Reveal on next frame so transitions run
 				requestAnimationFrame(() => {
 					entry.target.classList.add('is-visible');
 				});
@@ -169,7 +174,6 @@ const initThemeToggle = () => {
 	applyTheme(initialTheme);
 	updateThemeIcon(initialTheme, toggleIcon);
 
-	// Follow system theme only if user hasn't chosen manually
 	if (!storedTheme) {
 		const media = window.matchMedia('(prefers-color-scheme: dark)');
 		media.addEventListener('change', (event) => {
@@ -194,7 +198,6 @@ const initThemeToggle = () => {
 const applyTheme = (theme) => {
 	document.documentElement.dataset.theme = theme;
 
-	// Update charts when theme changes
 	if (typeof window.updateChartsTheme === 'function') {
 		requestAnimationFrame(() => {
 			window.updateChartsTheme();
