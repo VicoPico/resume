@@ -1,6 +1,11 @@
 // CV site scaffold
 document.addEventListener('DOMContentLoaded', async () => {
 	await loadIncludes();
+
+	// Ensure injected DOM is painted before we attach reveal logic
+	await new Promise((r) => requestAnimationFrame(r));
+
+	initRevealOnScroll('.skills-list li', { stagger: 180, threshold: 0.2 });
 	initChartObserver();
 	initThemeToggle();
 });
@@ -94,6 +99,55 @@ const initChartObserver = () => {
 	);
 
 	targets.forEach((target) => observer.observe(target));
+};
+
+/* -------------------------------------------------- */
+/*  GENERIC REVEAL ON SCROLL                          */
+/* -------------------------------------------------- */
+
+const initRevealOnScroll = (
+	selector,
+	{
+		threshold = 0.2,
+		rootMargin = '0px 0px -5% 0px',
+		stagger = 0,
+		once = true,
+	} = {},
+) => {
+	const targets = Array.from(document.querySelectorAll(selector));
+	if (targets.length === 0) return;
+
+	// Apply stagger delay (works whether or not IntersectionObserver is used)
+	targets.forEach((el, index) => {
+		if (stagger > 0)
+			el.style.setProperty('--reveal-delay', `${index * stagger}ms`);
+	});
+
+	// If IntersectionObserver isn't supported, reveal immediately (still staggered)
+	if (!('IntersectionObserver' in window)) {
+		requestAnimationFrame(() => {
+			targets.forEach((el) => el.classList.add('is-visible'));
+		});
+		return;
+	}
+
+	const observer = new IntersectionObserver(
+		(entries) => {
+			entries.forEach((entry) => {
+				if (!entry.isIntersecting) return;
+
+				// Reveal on next frame so transitions run
+				requestAnimationFrame(() => {
+					entry.target.classList.add('is-visible');
+				});
+
+				if (once) observer.unobserve(entry.target);
+			});
+		},
+		{ threshold, rootMargin },
+	);
+
+	targets.forEach((el) => observer.observe(el));
 };
 
 /* -------------------------------------------------- */
