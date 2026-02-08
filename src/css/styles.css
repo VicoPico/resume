@@ -13,6 +13,7 @@
 	--chart-grid: rgba(42, 42, 46, 0.12);
 	--chart-tick: rgba(42, 42, 46, 0.85);
 	--icon-filter: none;
+
 	--font-sans:
 		'Quicksand', 'Raleway', system-ui, -apple-system, BlinkMacSystemFont,
 		'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -24,10 +25,13 @@
 	--divider-width: 1.5px;
 	--divider-column-width: 24px;
 	--grid-column-gap: 24px;
+
 	--contact-row-gap: 12px; /* spacing between email + phone rows */
 	--contact-icon-gap: 18px;
+
 	--location-offset: 40px;
 	--column-edge-offset: 16px;
+
 	--space-h1-h2: 18px;
 	--space-h1-h3: 12px;
 	--space-h1-h4: 10px;
@@ -38,18 +42,22 @@
 	--space-h4-chart: 12px;
 	--space-h3-chart: 14px;
 	--space-heading-list: 8px;
+
 	--space-section-item: 16px;
 	--space-chart-stack: 56px;
 	--space-skill-group: 64px;
+
 	--soft-chart-height: 220px;
 	--hard-chart-height: 220px;
 	--hard-chart-rows: 23;
 	--hard-chart-row-height: 24px;
+
 	--soft-chart-offset-x: 10px;
+
 	--timeline-marker-size: 8px;
 	--timeline-marker-offset: 18px;
+
 	--theme-toggle-space: 40px;
-	--hard-chart-row-height: 24px;
 }
 
 html[data-theme='dark'] {
@@ -270,7 +278,6 @@ h4 + ul {
 }
 
 /* Right side stacks Title and About vertically */
-
 .header-right {
 	display: contents;
 }
@@ -583,6 +590,7 @@ html[data-theme='dark'] #themeIcon {
 	transform: translateY(0);
 }
 
+/* Bubble chart overlay */
 .bubble-chart {
 	position: relative;
 	width: 100%;
@@ -668,12 +676,12 @@ ul {
 	margin: 4px 0 8px;
 	color: var(--muted);
 	font-size: 13px;
-	/* font-family: var(--font-mono); */
 	letter-spacing: 0.02em;
 }
 
 /* ---------------- Responsive ---------------- */
 
+/* FIX: remove invalid nested rules and make tablet/mobile predictable */
 @media (max-width: 900px) {
 	.cv-container {
 		padding: 24px;
@@ -682,31 +690,25 @@ ul {
 	.cv-header,
 	.cv-body {
 		grid-template-columns: 1fr;
+		column-gap: 0;
 	}
 
 	.cv-header {
 		grid-template-rows: none;
-
-		.header-title {
-			grid-row: 1;
-		}
-
-		.quick-contact li:nth-child(1) {
-			grid-row: 2;
-		}
-
-		.quick-contact li:nth-child(2) {
-			grid-row: 3;
-		}
 		row-gap: 16px;
 	}
 
 	.header-left,
 	.header-title,
 	.quick-contact li,
-	.about {
+	.about,
+	.theme-toggle {
 		grid-column: 1;
 		grid-row: auto;
+	}
+
+	.header-title {
+		grid-row: 1;
 	}
 
 	.quick-contact {
@@ -717,5 +719,102 @@ ul {
 	.header-divider,
 	.page-divider {
 		display: none;
+	}
+}
+
+/* Mobile-specific polish (safe overrides only under 640px) */
+@media (max-width: 640px) {
+	.cv-container {
+		padding: 18px;
+	}
+
+	/* Header layout: center and stack */
+	.header-left {
+		justify-items: center;
+	}
+
+	.avatar {
+		margin-right: 0;
+		justify-self: center;
+	}
+
+	.location {
+		justify-self: center;
+		padding-right: 0;
+		margin-top: 16px;
+		text-align: center;
+	}
+
+	.location-row.location-city {
+		justify-content: center;
+		text-align: center;
+	}
+
+	.header-title {
+		padding-right: 0;
+		text-align: center;
+	}
+
+	.quick-contact {
+		justify-items: center;
+		text-align: center;
+	}
+
+	.about {
+		text-align: left;
+		margin-top: 12px;
+	}
+
+	/* Typography scale down */
+	h1 {
+		font-size: 44px;
+		line-height: 1.05;
+	}
+
+	h3 {
+		font-size: 16px;
+	}
+
+	h4 {
+		font-size: 15px;
+	}
+
+	/* Skills column becomes left-aligned for readability */
+	.skills {
+		justify-self: stretch;
+		padding-right: 0;
+	}
+
+	#skills-title {
+		text-align: left;
+	}
+
+	.professional-skills,
+	.soft-skills,
+	.technical-skills,
+	.languages,
+	.driver-license {
+		text-align: left;
+	}
+
+	.skills-list {
+		justify-items: start;
+	}
+
+	/* Compact spacing + keep charts inside viewport */
+	:root {
+		--space-chart-stack: 28px;
+		--space-skill-group: 36px;
+		--soft-chart-height: 180px;
+		--soft-chart-offset-x: 0px;
+	}
+
+	.chart-container canvas {
+		transform: none;
+	}
+
+	/* Timeline marker: reduce bleed on small screens */
+	.timeline-item h4::before {
+		left: -12px;
 	}
 }
